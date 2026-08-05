@@ -1,3 +1,3 @@
 const evaluations = [];
 
-module.exports = evaluations; 
+module.exports = evaluations;

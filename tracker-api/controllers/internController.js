@@ -38,6 +38,7 @@ const getInternById = (req, res) => {
 };
 
 // Update Intern
+// Update Intern
 const updateIntern = (req, res) => {
     const id = Number(req.params.id);
 
@@ -79,6 +80,16 @@ const deleteIntern = (req, res) => {
 };
 
 // Export (MUST be at the end)
+// createIntern
+
+// getAllInterns
+
+// getInternById
+
+// updateIntern
+
+// deleteIntern
+
 module.exports = {
     createIntern,
     getAllInterns,
