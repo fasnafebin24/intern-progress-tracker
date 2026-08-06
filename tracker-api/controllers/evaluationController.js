@@ -1,7 +1,8 @@
 const evaluations = require("../data/evaluations");
 const tasks = require("../data/tasks");
+const axios = require("axios");
 
-const createEvaluation = (req, res) => {
+const createEvaluation = async (req, res) => {
     const { taskId, score, notes } = req.body;
     const task = tasks.find(
     task => task.id === Number(taskId)
@@ -21,6 +22,19 @@ if (!task) {
     };
 
     evaluations.push(newEvaluation);
+   try {
+
+    await axios.post("http://localhost:4000/notify", {
+        taskId: newEvaluation.taskId,
+        score: newEvaluation.score,
+        notes: newEvaluation.notes
+    });
+
+} catch (error) {
+
+    console.log("Digest Service is unavailable:", error.message);
+
+}
 
     res.status(201).json(newEvaluation);
 };
