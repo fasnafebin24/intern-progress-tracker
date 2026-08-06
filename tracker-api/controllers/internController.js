@@ -1,4 +1,6 @@
 const interns = require("../data/interns");
+const tasks = require("../data/tasks");
+const evaluations = require("../data/evaluations");
 
 // Create Intern
 const createIntern = (req, res) => {
@@ -61,9 +63,9 @@ const updateIntern = (req, res) => {
 };
 
 // Delete Intern
+// Delete Intern
 const deleteIntern = (req, res) => {
     const id = Number(req.params.id);
-
     const index = interns.findIndex(intern => intern.id === id);
 
     if (index === -1) {
@@ -79,21 +81,60 @@ const deleteIntern = (req, res) => {
     });
 };
 
-// Export (MUST be at the end)
-// createIntern
+// Summary
+const getInternSummary = (req, res) => {
 
-// getAllInterns
+    const internId = Number(req.params.id);
 
-// getInternById
+    const intern = interns.find(
+        intern => intern.id === internId
+    );
 
-// updateIntern
+    if (!intern) {
+        return res.status(404).json({
+            message: "Intern not found"
+        });
+    }
+    const internTasks = tasks.filter(
+    task => Number(task.internId) === internId
+);
+const totalTasks = internTasks.length;
+const completedTasks = internTasks.filter(
+    task => task.status === "Done"
+).length;
+const taskIds = internTasks.map(
+    task => task.id
+);
 
-// deleteIntern
+const internEvaluations = evaluations.filter(
+    evaluation => taskIds.includes(evaluation.taskId)
+);
+let averageEvaluationScore = 0;
 
+if (internEvaluations.length > 0) {
+
+    const totalScore = internEvaluations.reduce(
+        (sum, evaluation) => sum + evaluation.score,
+        0
+    );
+
+    averageEvaluationScore = totalScore / internEvaluations.length;
+
+}
+
+  res.json({
+    internId,
+    totalTasks,
+    completedTasks,
+    averageEvaluationScore
+});}
+
+// Export
 module.exports = {
     createIntern,
     getAllInterns,
     getInternById,
     updateIntern,
-    deleteIntern
+    deleteIntern,
+    getInternSummary
 };

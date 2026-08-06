@@ -19,8 +19,7 @@ app.use("/evaluations", evaluationRoutes);
 app.get("/", (req, res) => {
     res.send("Tracker API is Running");
 });
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Tracker API running on port ${PORT}`);
