@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  tracker-api:
+    build: ./tracker-api
+    container_name: tracker-api
+    ports:
+      - "3001:3000"
+
+  digest-service:
+    build: ./digest-service
+    container_name: digest-service
+    ports:
+      - "4001:4000"
+    depends_on:
+      - tracker-api

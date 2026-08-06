@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: tracker-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: tracker-api
+
+  template:
+    metadata:
+      labels:
+        app: tracker-api
+
+    spec:
+      containers:
+      - name: tracker-api
+        image: tracker-api:latest
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 3000

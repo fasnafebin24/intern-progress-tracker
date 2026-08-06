@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: digest-service
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: digest-service
+
+  template:
+    metadata:
+      labels:
+        app: digest-service
+
+    spec:
+      containers:
+      - name: digest-service
+        image: digest-service:latest
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 4000
