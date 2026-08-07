@@ -22,6 +22,8 @@ app.get("/", (req, res) => {
 });
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log("Tracker API running on port " + PORT);
+
+
+app.listen(PORT, function () {
+    console.log("Tracker API running on port 3000");
 });

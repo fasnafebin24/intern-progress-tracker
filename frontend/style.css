@@ -1,52 +1,187 @@
-body{
-    font-family: Arial;
-    background:#f4f6f8;
-    margin:0;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
 }
 
-
-header{
-    background:#2563eb;
-    color:white;
-    padding:20px;
-    text-align:center;
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: #f8fafc;
+    color: #172033;
 }
 
-
-.container{
-
-    width:500px;
-    margin:40px auto;
-    text-align:center;
-
+/* Header */
+header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: white;
+    padding: 42px 20px;
+    text-align: center;
 }
 
-
-.card{
-
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 0 10px gray;
-
+header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
 }
 
-
-button{
-
-    margin-top:20px;
-    padding:12px 25px;
-    border:none;
-    background:#2563eb;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
-
+header p {
+    margin: 10px 0 0;
+    color: #cbd5e1;
+    font-size: 14px;
 }
 
+/* Main */
+main {
+    width: 92%;
+    max-width: 1000px;
+    margin: -25px auto 60px;
+}
 
-button:hover{
+/* Section headings */
+h2 {
+    font-size: 20px;
+    margin: 38px 0 16px;
+    color: #0f172a;
+    font-weight: 700;
+}
 
-    background:#1d4ed8;
+/* Cards */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    margin-bottom: 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
 
+/* Summary card */
+.card p {
+    margin: 14px 0;
+    font-size: 15px;
+    color: #64748b;
+}
+
+#totalTasks,
+#completedTasks,
+#averageScore {
+    color: #2563eb;
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 6px;
+}
+
+/* Form */
+input,
+select {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    border: 1px solid #dbe2ea;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #172033;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    background: white;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* Buttons */
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    margin-top: 8px;
+    background: #2563eb;
+    color: white;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Task list */
+#taskList > div {
+    background: #f8fafc;
+    border: 1px solid #e5eaf0;
+    border-radius: 13px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    transition: 0.2s ease;
+}
+
+#taskList > div:hover {
+    background: white;
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+#taskList p {
+    margin: 0;
+    color: #475569;
+}
+
+#taskList strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+/* Task buttons */
+#taskList button {
+    padding: 7px 12px;
+    margin-top: 0;
+    margin-left: 8px;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+    header {
+        padding: 32px 15px;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        width: 94%;
+        margin-top: -18px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    #taskList button {
+        margin-left: 4px;
+        margin-top: 8px;
+    }
 }

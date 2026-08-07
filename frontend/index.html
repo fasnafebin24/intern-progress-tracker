@@ -1,45 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intern Progress Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
+    <header>
     <h1>Intern Progress Tracker</h1>
+    <p>Track tasks, progress and performance</p>
 </header>
 
+    <main>
 
-<div class="container">
+        <!-- Intern Summary -->
+        <h2>Intern Summary</h2>
 
-    <h2>Intern Summary</h2>
+        <div class="card">
+            <p>Total Tasks: 
+                <span id="totalTasks">0</span>
+            </p>
 
-    <div class="card">
+            <p>Completed Tasks:
+                <span id="completedTasks">0</span>
+            </p>
 
-        <p>Total Tasks:
-            <span id="totalTasks">0</span>
-        </p>
+            <p>Average Score:
+                <span id="averageScore">0</span>
+            </p>
+        </div>
 
-        <p>Completed Tasks:
-            <span id="completedTasks">0</span>
-        </p>
-
-        <p>Average Score:
-            <span id="averageScore">0</span>
-        </p>
-
-    </div>
-
-    <button onclick="loadSummary()">
-        Load Summary
-    </button>
-
-</div>
+        <button onclick="loadSummary()">Load Summary</button>
 
 
-<script src="script.js"></script>
+        <!-- Task Management -->
+        <h2>Task Management</h2>
+
+        <div class="card">
+
+            <input
+                type="text"
+                id="taskTitle"
+                placeholder="Enter task title"
+            >
+
+            <select id="taskStatus">
+                <option value="Pending">Pending</option>
+                <option value="Done">Done</option>
+            </select>
+
+            <button onclick="createTask()">Add Task</button>
+
+        </div>
+
+
+        <!-- Task List -->
+        <div class="card">
+
+            <h3>Tasks</h3>
+
+            <div id="taskList">
+                <p>No tasks loaded.</p>
+            </div>
+
+        </div>
+
+        <button onclick="loadTasks()">Load Tasks</button>
+
+    </main>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
