@@ -132,6 +132,74 @@
     <!-- Form Message -->
     <p id="taskMessage" class="task-message"></p>
 
+</section><!-- Task Evaluation -->
+<section class="section">
+
+    <div class="section-header">
+        <div>
+            <h2>Task Evaluation</h2>
+            <p class="subtitle">
+                Evaluate completed intern tasks
+            </p>
+        </div>
+    </div><!-- Evaluation History -->
+<section class="section">
+
+    <div class="section-header">
+        <div>
+            <h2>Evaluation History</h2>
+            <p class="subtitle">
+                Scores and feedback for completed tasks
+            </p>
+        </div>
+
+        <button
+            class="secondary-btn"
+            onclick="loadSummary()">
+            ↻ Refresh
+        </button>
+    </div>
+
+    <div id="evaluationList">
+
+        <p class="subtitle">
+            No evaluations available.
+        </p>
+
+    </div>
+
+</section>
+
+    <div class="task-form">
+
+        <select id="evaluationTask">
+            <option value="">Select Task</option>
+        </select>
+
+        <input
+            type="number"
+            id="evaluationScore"
+            placeholder="Score (0-10)"
+            min="0"
+            max="10"
+        >
+
+        <input
+            type="text"
+            id="evaluationNotes"
+            placeholder="Evaluation notes"
+        >
+
+        <button
+            class="primary-btn"
+            onclick="createEvaluation()">
+            + Submit Evaluation
+        </button>
+
+    </div>
+
+    <p id="evaluationMessage" class="task-message"></p>
+
 </section>
 
 

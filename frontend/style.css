@@ -424,3 +424,37 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* ================================
+   Evaluation History
+================================ */
+
+#evaluationList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#evaluationList .task-item {
+    padding: 18px 20px;
+    border-radius: 12px;
+}
+
+#evaluationList .task-info {
+    width: 100%;
+}
+
+#evaluationList strong {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#evaluationList .task-status {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+#evaluationList .subtitle {
+    margin: 4px 0 0;
+    line-height: 1.5;
+}
