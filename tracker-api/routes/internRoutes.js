@@ -6,15 +6,13 @@ const {
     getAllInterns,
     getInternById,
     updateIntern,
-    deleteIntern,
-    getInternSummary
+    deleteIntern
 } = require("../controllers/internController");
 
 router.post("/", createIntern);
 
 router.get("/", getAllInterns);
 
-router.get("/:id/summary", getInternSummary);
 
 router.get("/:id", getInternById);
 

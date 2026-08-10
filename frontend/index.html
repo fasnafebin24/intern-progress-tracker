@@ -3,74 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Intern Progress Tracker</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Header -->
     <header>
-    <h1>Intern Progress Tracker</h1>
-    <p>Track tasks, progress and performance</p>
-</header>
+        <div class="container header-content">
+            <div>
+                <div class="logo">
+                    Intern <span>Progress</span> Tracker
+                </div>
+                <div class="subtitle">
+                    Monitor tasks, progress and performance
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <main>
+
+    <main class="container">
+
+        <!-- Page Title -->
+        <section class="page-title">
+            <h1>Dashboard</h1>
+            <p>Overview of intern tasks and performance</p>
+        </section>
+
 
         <!-- Intern Summary -->
-        <h2>Intern Summary</h2>
+        <section class="section">
 
-        <div class="card">
-            <p>Total Tasks: 
-                <span id="totalTasks">0</span>
-            </p>
+            <div class="section-header">
+                <h2>Intern Summary</h2>
 
-            <p>Completed Tasks:
-                <span id="completedTasks">0</span>
-            </p>
+                <button
+                    class="secondary-btn"
+                    onclick="loadSummary()">
+                    ↻ Refresh Summary
+                </button>
+            </div>
 
-            <p>Average Score:
-                <span id="averageScore">0</span>
-            </p>
-        </div>
+            <div class="summary-grid">
 
-        <button onclick="loadSummary()">Load Summary</button>
+                <div class="summary-card">
+                    <h3>Total Tasks</h3>
+                    <div
+                        class="summary-value"
+                        id="totalTasks">
+                        0
+                    </div>
+                    <div class="label">
+                        Assigned tasks
+                    </div>
+                </div>
+
+
+                <div class="summary-card">
+                    <h3>Completed Tasks</h3>
+                    <div
+                        class="summary-value"
+                        id="completedTasks">
+                        0
+                    </div>
+                    <div class="label">
+                        Successfully completed
+                    </div>
+                </div>
+
+
+                <div class="summary-card">
+                    <h3>Average Score</h3>
+                    <div
+                        class="summary-value"
+                        id="averageScore">
+                        0
+                    </div>
+                    <div class="label">
+                        Evaluation performance
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
 
 
         <!-- Task Management -->
-        <h2>Task Management</h2>
+    
+<!-- Task Management -->
+<section class="section">
 
-        <div class="card">
-
-            <input
-                type="text"
-                id="taskTitle"
-                placeholder="Enter task title"
-            >
-
-            <select id="taskStatus">
-                <option value="Pending">Pending</option>
-                <option value="Done">Done</option>
-            </select>
-
-            <button onclick="createTask()">Add Task</button>
-
+    <div class="section-header">
+        <div>
+            <h2>Task Management</h2>
+            <p class="subtitle">
+                Create and manage intern tasks
+            </p>
         </div>
+    </div>
+
+    <!-- Create Task Form -->
+    <div class="task-form">
+
+        <input
+            type="text"
+            id="taskTitle"
+            placeholder="Enter task title"
+        >
+
+        <select id="taskStatus">
+            <option value="Pending">Pending</option>
+            <option value="Done">Done</option>
+        </select>
+
+        <button
+            class="primary-btn"
+            onclick="createTask()">
+            + Create Task
+        </button>
+
+    </div>
+
+    <!-- Form Message -->
+    <p id="taskMessage" class="task-message"></p>
+
+</section>
+
+
 
 
         <!-- Task List -->
-        <div class="card">
+        <section class="section">
 
-            <h3>Tasks</h3>
+            <div class="section-header">
 
-            <div id="taskList">
-                <p>No tasks loaded.</p>
+                <div>
+                    <h2>Tasks</h2>
+                    <p class="subtitle">
+                        Current intern tasks
+                    </p>
+                </div>
+
+                <button
+                    class="secondary-btn"
+                    onclick="loadTasks()">
+                    ↻ Refresh
+                </button>
+
             </div>
 
-        </div>
 
-        <button onclick="loadTasks()">Load Tasks</button>
+            <div id="taskList">
+
+                <p class="subtitle">
+                    No tasks loaded.
+                </p>
+
+            </div>
+
+        </section>
 
     </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            Intern Progress Tracker · Internship Management System
+        </div>
+    </footer>
+
 
     <script src="script.js"></script>
 

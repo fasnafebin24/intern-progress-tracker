@@ -46,11 +46,9 @@ const getTaskById = (req, res) => {
     res.json(task);
 };
 // Update Task
+// Update Task
 const updateTask = (req, res) => {
     const id = Number(req.params.id);
-
-    console.log("Requested ID:", id);
-    console.log("Current Tasks:", tasks);
 
     const task = tasks.find(task => task.id === id);
 
@@ -62,9 +60,17 @@ const updateTask = (req, res) => {
 
     const { internId, title, status } = req.body;
 
-    task.internId = internId;
-    task.title = title;
-    task.status = status;
+    if (internId !== undefined) {
+        task.internId = internId;
+    }
+
+    if (title !== undefined) {
+        task.title = title;
+    }
+
+    if (status !== undefined) {
+        task.status = status;
+    }
 
     res.json(task);
 };
