@@ -2,14 +2,19 @@ const API_URL = "https://zany-carnival-5gjqgqx5wwp4h4gp4-3000.app.github.dev";
 
 function loadSummary() {
     fetch(`${API_URL}/interns/1/summary`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to load summary");
+            }
+            return response.json();
+        })
         .then(data => {
             document.getElementById("totalTasks").innerText = data.totalTasks;
             document.getElementById("completedTasks").innerText = data.completedTasks;
             document.getElementById("averageScore").innerText = data.averageEvaluationScore;
         })
         .catch(error => {
-            console.log(error);
+            console.error("Summary error:", error);
         });
 }
 
@@ -48,7 +53,7 @@ function loadTasks() {
             });
         })
         .catch(error => {
-            console.log(error);
+            console.error("Tasks error:", error);
         });
 }
 
@@ -82,7 +87,7 @@ function createTask() {
             loadSummary();
         })
         .catch(error => {
-            console.log(error);
+            console.error("Create task error:", error);
         });
 }
 
@@ -120,7 +125,7 @@ function updateTask(id, oldTitle, oldStatus) {
             loadSummary();
         })
         .catch(error => {
-            console.log(error);
+            console.error("Update task error:", error);
         });
 }
 
@@ -142,6 +147,10 @@ function deleteTask(id) {
             loadSummary();
         })
         .catch(error => {
-            console.log(error);
+            console.error("Delete task error:", error);
         });
 }
+
+// Load data when page opens
+loadSummary();
+loadTasks();
