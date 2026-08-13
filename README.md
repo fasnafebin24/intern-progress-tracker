@@ -79,4 +79,45 @@ GET /notify/digest
 
 ## Project Status
 
-Currently under development.
+Completed capstone project.
+
+architecture
++-------------------------------------------------------+
+
+                     |                     USER / CLIENT                     |
+                     +-------------------------------------------------------+
+
+                                         |                       |
+                       (Full CRUD & Summaries)               (Get System Digest)
+
+                                         |                       |
+                                         v                       v
++--------------------------------------------------+   +------------------------------------+
+
+|             SERVICE A: TRACKER API               |   |     SERVICE B: DIGEST SERVICE      |
++--------------------------------------------------+   |------------------------------------|
+
+|  Endpoints:                                      |   |  Endpoints:                        |
+|  - /interns     (CRUD)                           |   |  - /digest                         |
+|  - /tasks       (CRUD)                           |   +------------------------------------+
+|  - /evaluations (CRUD)                           |                             |
+|  - /interns/:id/summary                          |                             |
++--------------------------------------------------+                             |
+
+         |                                                                       |
+         | (1) HTTP POST /notifications (Async-like Event)                       |
+         |     "Hey, a new evaluation was added!"                                |
+         |----------------------------------------------------------------------->
+
+         |                                                                       |
+         | (2) HTTP GET /interns, /tasks, /evaluations                           |
+         |     "Give me the latest raw data for the system digest report."       |
+         |<----------------------------------------------------------------------+
+         |
+         v
++------------------+
+
+| INTERNAL DB /    |
+| DATA STORAGE     |
++------------------+
+This capstone project is completed and includes the Tracker API, Digest Service, Docker, Docker Compose, Kubernetes, and CI/CD.
