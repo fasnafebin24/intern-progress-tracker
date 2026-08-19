@@ -1,123 +1,242 @@
-# intern-progress-tracker
 # Intern Progress Tracker
 
-A simple microservices-based application for tracking intern progress, tasks, evaluations, and notifications.
+A microservices-based web application for managing interns, tracking tasks, recording evaluations, monitoring progress, and generating progress digest reports.
 
 ## Features
 
-*  Intern management
-*  Task management
-*  Notes and evaluations
-*  Intern progress summary
-*  Notification and digest service
-*  HTML, CSS, and JavaScript frontend
-* REST APIs using Node.js and Express
+- Intern management
+- Task management
+- Notes and evaluations
+- Individual intern progress summary
+- Notification service
+- Progress digest and summary reports
+- Modern React frontend
+- REST APIs using Node.js and Express
+- Docker containerization
+- Docker Compose support
+- Kubernetes deployment
+- CI/CD with GitHub Actions
 
-## Project Structure
+## Project Architecture
+
+The application consists of three main components:
 
 ```text
-intern-progress-tracker/
+                    ┌──────────────────────┐
+                    │    React Frontend    │
+                    │      Vite + CSS      │
+                    └──────────┬───────────┘
+                               │
+                               │ REST API
+                               ▼
+                    ┌──────────────────────┐
+                    │     Tracker API      │
+                    │   Node.js + Express  │
+                    │      Port: 3000      │
+                    └──────────┬───────────┘
+                               │
+                               │ Data
+                               ▼
+                    ┌──────────────────────┐
+                    │    Data Storage      │
+                    └──────────────────────┘
+
+                               ▲
+                               │
+                         HTTP Requests
+                               │
+                    ┌──────────┴───────────┐
+                    │    Digest Service    │
+                    │   Node.js + Express  │
+                    │      Port: 4000      │
+                    └──────────────────────┘
+ project structure
+ intern-progress-tracker/
+│
 ├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── views/
+│   │   ├── assets/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── tracker-api/
-└── digest-service/
-```
+│   ├── routes/
+│   ├── server.js
+│   └── package.json
+│
+├── digest-service/
+│   ├── server.js
+│   └── package.json
+│
+├── docker-compose.yml
+└── README.md
+Services
+1. Tracker API
 
-### Tracker API
+The Tracker API manages intern-related data and provides REST endpoints for:
 
-Runs on port `3000` and handles:
+Interns
+Tasks
+Notes
+Evaluations
+Progress summaries
 
-* Interns
-* Tasks
-* Notes
-* Evaluations
-* Progress summaries
+Port: 3000
 
-### Digest Service
+2. Digest Service
 
-Runs on port `4000` and handles:
+The Digest Service communicates with the Tracker API and provides:
 
-* Notifications
-* Progress digest
-* Summary reports
+Notifications
+Progress digest
+Summary reports
 
-## Technologies
+Port: 4000
 
-* HTML
-* CSS
-* JavaScript
-* Node.js
-* Express.js
-* Axios
-* Git & GitHub
-* Docker / Kubernetes
+3. React Frontend
 
-## Running the Project
+The frontend provides a user-friendly interface for:
 
-Start the Tracker API:
+Viewing interns
+Managing tasks
+Viewing evaluations
+Monitoring intern summaries
+Navigating between application modules
 
-```bash
+Technology: React + Vite
+
+Development Port: 5173
+
+Technologies Used
+Frontend
+React
+Vite
+JavaScript
+HTML
+CSS
+Backend
+Node.js
+Express.js
+REST API
+Axios
+DevOps
+Docker
+Docker Compose
+Kubernetes
+Minikube
+GitHub Actions
+Git & GitHub
+API Endpoints
+Tracker API
+GET    /interns
+POST   /interns
+GET    /interns/:id
+PUT    /interns/:id
+DELETE /interns/:id
+
+
+GET    /tasks
+POST   /tasks
+PUT    /tasks/:id
+DELETE /tasks/:id
+
+
+GET    /evaluations
+POST   /evaluations
+
+
+GET    /interns/:id/summary
+Digest Service
+POST /notify
+GET  /notify/digest
+Running the Project
+1. Start Tracker API
 cd tracker-api
+npm install
 npm start
-```
 
-Start the Digest Service:
+Tracker API will run on:
 
-```bash
+http://localhost:3000
+2. Start Digest Service
+
+Open another terminal:
+
 cd digest-service
+npm install
 npm start
-```
 
-## API Examples
+Digest Service will run on:
 
-```text
-GET /interns
-GET /tasks
-GET /evaluations
-GET /interns/:id/summary
-GET /notify/digest
-```
+http://localhost:4000
+3. Start React Frontend
 
-## Project Status
+Open another terminal:
 
-Completed capstone project.
+cd frontend
+npm install
+npm run dev
 
-architecture
-+-------------------------------------------------------+
+The frontend will run on:
 
-                     |                     USER / CLIENT                     |
-                     +-------------------------------------------------------+
+http://localhost:5173
+Running with Docker
 
-                                         |                       |
-                       (Full CRUD & Summaries)               (Get System Digest)
+Build and start the services using Docker Compose:
 
-                                         |                       |
-                                         v                       v
-+--------------------------------------------------+   +------------------------------------+
+docker compose up --build
 
-|             SERVICE A: TRACKER API               |   |     SERVICE B: DIGEST SERVICE      |
-+--------------------------------------------------+   |------------------------------------|
+To stop the services:
 
-|  Endpoints:                                      |   |  Endpoints:                        |
-|  - /interns     (CRUD)                           |   |  - /digest                         |
-|  - /tasks       (CRUD)                           |   +------------------------------------+
-|  - /evaluations (CRUD)                           |                             |
-|  - /interns/:id/summary                          |                             |
-+--------------------------------------------------+                             |
+docker compose down
+Kubernetes Deployment
 
-         |                                                                       |
-         | (1) HTTP POST /notifications (Async-like Event)                       |
-         |     "Hey, a new evaluation was added!"                                |
-         |----------------------------------------------------------------------->
+The project also supports deployment using Kubernetes and Minikube.
 
-         |                                                                       |
-         | (2) HTTP GET /interns, /tasks, /evaluations                           |
-         |     "Give me the latest raw data for the system digest report."       |
-         |<----------------------------------------------------------------------+
-         |
-         v
-+------------------+
+Start Minikube:
 
-| INTERNAL DB /    |
-| DATA STORAGE     |
-+------------------+
-This capstone project is completed and includes the Tracker API, Digest Service, Docker, Docker Compose, Kubernetes, and CI/CD.
+minikube start --driver=docker
+
+Apply the Kubernetes configurations:
+
+kubectl apply -f .
+
+Check running pods:
+
+kubectl get pods
+
+Check services:
+
+kubectl get svc
+CI/CD
+
+GitHub Actions is used for continuous integration and deployment workflow.
+
+The workflow validates the project and helps automate the development and deployment process.
+
+Project Status
+
+Completed Capstone Project
+
+The project includes:
+
+React frontend
+Tracker API
+Digest Service
+REST API integration
+Docker
+Docker Compose
+Kubernetes
+Minikube
+GitHub Actions CI/CD
+Progress summary functionality
+Notification and digest functionality
+ 
+           // complete project//
+           
+
+              
