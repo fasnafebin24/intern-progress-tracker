@@ -1,133 +1,116 @@
-const interns = require("../data/interns");
-const tasks = require("../data/tasks");
-const evaluations = require("../data/evaluations");
+const Intern = require("../models/internModel");
 
 // Create Intern
-const createIntern = (req, res) => {
-    const { name, email, startDate, track } = req.body;
+const createIntern = async (req, res) => {
+    try {
+        const { name, email, startDate, track } = req.body;
 
-    const newIntern = {
-        id: Date.now(),
-        name,
-        email,
-        startDate,
-        track
-    };
+        const newIntern = await Intern.create({
+            id: Date.now(),
+            name,
+            email,
+            startDate,
+            track
+        });
 
-    interns.push(newIntern);
-
-    res.status(201).json(newIntern);
+        res.status(201).json(newIntern);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to create intern",
+            error: error.message
+        });
+    }
 };
 
 // Get All Interns
-const getAllInterns = (req, res) => {
-    res.json(interns);
+const getAllInterns = async (req, res) => {
+    try {
+        const interns = await Intern.find();
+        res.json(interns);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch interns",
+            error: error.message
+        });
+    }
 };
 
 // Get Intern By ID
-const getInternById = (req, res) => {
-    const id = Number(req.params.id);
+const getInternById = async (req, res) => {
+    try {
+        const id = Number(req.params.id);
 
-    const intern = interns.find(intern => intern.id === id);
+        const intern = await Intern.findOne({ id });
 
-    if (!intern) {
-        return res.status(404).json({
-            message: "Intern not found"
+        if (!intern) {
+            return res.status(404).json({
+                message: "Intern not found"
+            });
+        }
+
+        res.json(intern);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch intern",
+            error: error.message
         });
     }
-
-    res.json(intern);
 };
 
 // Update Intern
-// Update Intern
-const updateIntern = (req, res) => {
-    const id = Number(req.params.id);
+const updateIntern = async (req, res) => {
+    try {
+        const id = Number(req.params.id);
 
-    const intern = interns.find(intern => intern.id === id);
+        const intern = await Intern.findOneAndUpdate(
+            { id },
+            {
+                name: req.body.name,
+                email: req.body.email,
+                startDate: req.body.startDate,
+                track: req.body.track
+            },
+            { new: true }
+        );
 
-    if (!intern) {
-        return res.status(404).json({
-            message: "Intern not found"
+        if (!intern) {
+            return res.status(404).json({
+                message: "Intern not found"
+            });
+        }
+
+        res.json(intern);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to update intern",
+            error: error.message
         });
     }
-
-    const { name, email, startDate, track } = req.body;
-
-    intern.name = name;
-    intern.email = email;
-    intern.startDate = startDate;
-    intern.track = track;
-
-    res.json(intern);
 };
 
 // Delete Intern
-// Delete Intern
-const deleteIntern = (req, res) => {
-    const id = Number(req.params.id);
-    const index = interns.findIndex(intern => intern.id === id);
+const deleteIntern = async (req, res) => {
+    try {
+        const id = Number(req.params.id);
 
-    if (index === -1) {
-        return res.status(404).json({
-            message: "Intern not found"
+        const intern = await Intern.findOneAndDelete({ id });
+
+        if (!intern) {
+            return res.status(404).json({
+                message: "Intern not found"
+            });
+        }
+
+        res.json({
+            message: "Intern deleted successfully"
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to delete intern",
+            error: error.message
         });
     }
-
-    interns.splice(index, 1);
-
-    res.json({
-        message: "Intern deleted successfully"
-    });
 };
-
-// Summary
-const getInternSummary = (req, res) => {
-
-    const internId = Number(req.params.id);
-
-    const intern = interns.find(
-        intern => intern.id === internId
-    );
-
-    if (!intern) {
-        return res.status(404).json({
-            message: "Intern not found"
-        });
-    }
-    const internTasks = tasks.filter(
-    task => Number(task.internId) === internId
-);
-const totalTasks = internTasks.length;
-const completedTasks = internTasks.filter(
-    task => task.status === "Done"
-).length;
-const taskIds = internTasks.map(
-    task => task.id
-);
-
-const internEvaluations = evaluations.filter(
-    evaluation => taskIds.includes(evaluation.taskId)
-);
-let averageEvaluationScore = 0;
-
-if (internEvaluations.length > 0) {
-
-    const totalScore = internEvaluations.reduce(
-        (sum, evaluation) => sum + evaluation.score,
-        0
-    );
-
-    averageEvaluationScore = totalScore / internEvaluations.length;
-
-}
-
-  res.json({
-    internId,
-    totalTasks,
-    completedTasks,
-    averageEvaluationScore
-});}
 
 // Export
 module.exports = {
@@ -135,6 +118,5 @@ module.exports = {
     getAllInterns,
     getInternById,
     updateIntern,
-    deleteIntern,
-    getInternSummary
+    deleteIntern
 };

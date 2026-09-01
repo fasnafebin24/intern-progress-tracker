@@ -144,7 +144,6 @@ POST   /tasks
 PUT    /tasks/:id
 DELETE /tasks/:id
 
-
 GET    /evaluations
 POST   /evaluations
 
@@ -237,6 +236,6 @@ Progress summary functionality
 Notification and digest functionality
  
            // complete project//
-           
+            
 
               

@@ -1,12 +1,20 @@
+import logo from "../assets/ipt-logo.png";
+
 function Navbar({ currentView, setCurrentView }) {
   return (
     <nav className="navbar">
+
       <div className="nav-brand">
-        <span className="brand-icon">📊</span>
+        <img
+          src={logo}
+          alt="IPT Logo"
+          className="navbar-logo"
+        />
         <span>IPT</span>
       </div>
 
       <div className="nav-links">
+
         <button
           className={currentView === "interns" ? "active" : ""}
           onClick={() => setCurrentView("interns")}
@@ -34,7 +42,9 @@ function Navbar({ currentView, setCurrentView }) {
         >
           📊 Summary / Digest
         </button>
+
       </div>
+
     </nav>
   );
 }

@@ -1,0 +1,36 @@
+.header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 18px 40px;
+  box-sizing: border-box;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-logo {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
+
+.header-brand h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.header-brand h1 span {
+  color: #4f46e5;
+}
+
+.header-brand p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}

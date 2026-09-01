@@ -33,8 +33,6 @@ textarea {
 }
 
 
-
-
 /* =========================================
    MODERN HEADER
 ========================================= */
@@ -114,7 +112,6 @@ textarea {
 }
 
 
-
 /* =========================================
    HEADER MOBILE
 ========================================= */
@@ -143,58 +140,102 @@ textarea {
   .header p {
     font-size: 12px;
   }
-
-  
 }
 
 
 /* =========================================
-   NAVBAR
+   MODERN STICKY NAVBAR
 ========================================= */
 
 .navbar {
-  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
   border-bottom: 1px solid #e5e7eb;
 
   display: flex;
   align-items: center;
 
   padding: 10px 6%;
-  gap: 35px;
+
+  gap: 32px;
+
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
 }
+
+
+/* =========================================
+   NAVBAR BRAND
+========================================= */
 
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+
+  gap: 9px;
 
   color: #4f46e5;
-  font-size: 17px;
+
+  font-size: 16px;
   font-weight: 800;
 
-  min-width: 60px;
+  white-space: nowrap;
+
+  letter-spacing: -0.2px;
 }
 
 .brand-icon {
-  font-size: 19px;
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef2ff;
+
+  border: 1px solid #e0e7ff;
+
+  border-radius: 9px;
+
+  font-size: 17px;
 }
+
+
+/* =========================================
+   NAVIGATION LINKS
+========================================= */
 
 .nav-links {
   display: flex;
   align-items: center;
+
   gap: 5px;
 }
 
 .nav-links button {
+  position: relative;
+
   background: transparent;
+
   color: #64748b;
 
   border: none;
+
   border-radius: 8px;
 
-  padding: 9px 14px;
+  padding: 9px 15px;
 
   font-size: 14px;
+
   font-weight: 600;
 
   cursor: pointer;
@@ -204,12 +245,37 @@ textarea {
 
 .nav-links button:hover {
   background: #f1f3ff;
+
   color: #4f46e5;
 }
 
 .nav-links button.active {
   background: #eef2ff;
+
   color: #4f46e5;
+}
+
+
+/* Active page purple indicator */
+
+.nav-links button.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: -11px;
+
+  transform: translateX(-50%);
+
+  width: 20px;
+
+  height: 3px;
+
+  background: #4f46e5;
+
+  border-radius: 10px;
 }
 
 
@@ -219,6 +285,7 @@ textarea {
 
 .main-content {
   width: 88%;
+
   max-width: 1180px;
 
   margin: 0 auto;
@@ -243,7 +310,9 @@ textarea {
   margin: 0;
 
   font-size: 34px;
+
   font-weight: 800;
+
   letter-spacing: -0.8px;
 
   color: #0b132b;
@@ -253,6 +322,7 @@ textarea {
   margin: 7px 0 0;
 
   color: #64748b;
+
   font-size: 15px;
 }
 
@@ -267,7 +337,9 @@ textarea {
 
 .section-heading {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   margin-bottom: 16px;
@@ -277,6 +349,7 @@ textarea {
   margin: 0;
 
   font-size: 19px;
+
   font-weight: 700;
 
   color: #111827;
@@ -284,6 +357,7 @@ textarea {
 
 .count-badge {
   background: #eef2ff;
+
   color: #4f46e5;
 
   padding: 5px 11px;
@@ -291,6 +365,7 @@ textarea {
   border-radius: 20px;
 
   font-size: 12px;
+
   font-weight: 700;
 }
 
@@ -320,6 +395,7 @@ textarea {
   background: #ffffff;
 
   border: 1px solid #e2e8f0;
+
   border-radius: 14px;
 
   padding: 22px;
@@ -348,6 +424,7 @@ textarea {
   color: #111827;
 
   font-size: 18px;
+
   font-weight: 700;
 }
 
@@ -362,7 +439,9 @@ textarea {
 
 .info-row {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
 
   gap: 20px;
@@ -382,11 +461,13 @@ textarea {
 
 .info-label {
   color: #64748b;
+
   font-weight: 600;
 }
 
 .track-badge {
   background: #eef2ff;
+
   color: #4f46e5;
 
   padding: 5px 11px;
@@ -394,6 +475,7 @@ textarea {
   border-radius: 20px;
 
   font-size: 12px;
+
   font-weight: 700;
 }
 
@@ -404,6 +486,7 @@ textarea {
 
 .modern-form {
   width: 100%;
+
   max-width: 100%;
 
   padding: 26px;
@@ -411,6 +494,7 @@ textarea {
   background: #ffffff;
 
   border: 1px solid #e2e8f0;
+
   border-radius: 14px;
 
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
@@ -420,6 +504,7 @@ form {
   background: #ffffff;
 
   border: 1px solid #e2e8f0;
+
   border-radius: 14px;
 
   padding: 26px;
@@ -441,6 +526,7 @@ form {
 
 .form-group {
   display: flex;
+
   flex-direction: column;
 }
 
@@ -456,6 +542,7 @@ label {
   color: #475569;
 
   font-size: 13px;
+
   font-weight: 600;
 }
 
@@ -492,11 +579,13 @@ select:focus,
 textarea:focus {
   border-color: #6366f1;
 
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.09);
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.09);
 }
 
 textarea {
   min-height: 100px;
+
   resize: vertical;
 }
 
@@ -517,6 +606,7 @@ button {
   color: #ffffff;
 
   font-size: 14px;
+
   font-weight: 600;
 
   cursor: pointer;
@@ -530,6 +620,7 @@ button:hover {
 
 button:disabled {
   opacity: 0.55;
+
   cursor: not-allowed;
 }
 
@@ -544,7 +635,8 @@ button:disabled {
 
   font-weight: 700;
 
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.15);
+  box-shadow:
+    0 4px 10px rgba(79, 70, 229, 0.15);
 }
 
 .primary-button:hover {
@@ -570,6 +662,7 @@ button:disabled {
   color: #15803d;
 
   font-size: 12px;
+
   font-weight: 700;
 }
 
@@ -585,6 +678,7 @@ button:disabled {
   color: #b45309;
 
   font-size: 12px;
+
   font-weight: 700;
 }
 
@@ -596,6 +690,7 @@ button:disabled {
   margin-top: 16px;
 
   background: #eef2ff;
+
   color: #4f46e5;
 
   border: 1px solid #c7d2fe;
@@ -603,11 +698,13 @@ button:disabled {
   padding: 8px 13px;
 
   font-size: 13px;
+
   font-weight: 700;
 }
 
 .task-done-button:hover {
   background: #4f46e5;
+
   color: #ffffff;
 }
 
@@ -632,6 +729,7 @@ button:disabled {
   border-radius: 20px;
 
   font-size: 13px;
+
   font-weight: 700;
 }
 
@@ -665,7 +763,8 @@ button:disabled {
 .stats-grid {
   display: grid;
 
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
   gap: 20px;
 
@@ -693,7 +792,8 @@ button:disabled {
 .stat-card:hover {
   transform: translateY(-2px);
 
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
+  box-shadow:
+    0 10px 25px rgba(15, 23, 42, 0.07);
 }
 
 .stat-card::before {
@@ -702,7 +802,9 @@ button:disabled {
   position: absolute;
 
   left: 0;
+
   top: 0;
+
   bottom: 0;
 
   width: 4px;
@@ -763,19 +865,37 @@ button:disabled {
 @media (max-width: 768px) {
 
   .header {
-    padding: 22px;
+    padding: 20px 22px;
   }
 
   .header h1 {
-    font-size: 25px;
+    font-size: 24px;
   }
 
+  .header p {
+    font-size: 12px;
+  }
+
+  /* Sticky mobile navbar */
+
   .navbar {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
     padding: 10px 18px;
 
     overflow-x: auto;
 
-    gap: 15px;
+    gap: 12px;
+
+    scrollbar-width: none;
+  }
+
+  .navbar::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-brand {
@@ -784,10 +904,20 @@ button:disabled {
 
   .nav-links {
     width: max-content;
+
+    gap: 4px;
   }
 
   .nav-links button {
     white-space: nowrap;
+
+    padding: 9px 13px;
+  }
+
+  .nav-links button.active::after {
+    bottom: -9px;
+
+    width: 18px;
   }
 
   .main-content {
@@ -821,4 +951,72 @@ button:disabled {
 
     gap: 5px;
   }
+
+  form,
+  .modern-form {
+    padding: 20px;
+  }
+}
+/* =========================
+   NAVBAR LOGO
+========================= */
+
+.navbar-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Keep navbar modern and sticky */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid #e2e8f0;
+
+  display: flex;
+  align-items: center;
+
+  padding: 10px 6.5%;
+  gap: 30px;
+}
+.navbar-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  display: block;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #4f46e5;
+  font-size: 18px;
+  font-weight: 800;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
