@@ -24,3 +24,7 @@ spec:
 
         ports:
         - containerPort: 4000
+
+        env:
+        - name: TRACKER_API_URL
+          value: "http://tracker-api:3000"

@@ -34,9 +34,9 @@ const getDigest = async (req, res) => {
     try {
         // Fix: Fire requests in parallel to improve execution speed
         const [internsResponse, tasksResponse, evaluationsResponse] = await Promise.all([
-            axios.get("http://127.0.0.1:3000/interns"),
-            axios.get("http://127.0.0.1:3000/tasks"),
-            axios.get("http://127.0.0.1:3000/evaluations")
+           axios.get(`${process.env.TRACKER_API_URL}/interns`),
+           axios.get(`${process.env.TRACKER_API_URL}/tasks`),
+           axios.get(`${process.env.TRACKER_API_URL}/evaluations`)
         ]);
 
         const interns = internsResponse.data || [];
