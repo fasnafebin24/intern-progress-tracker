@@ -1,93 +1,113 @@
-const notes = require("../models/noteModel");
-const tasks = require("../data/tasks");
-
+const Note = require("../models/noteModel");
+const Task = require("../models/taskModel");
 
 // GET ALL NOTES
-exports.getAllNotes = (req, res) => {
-    res.json(notes);
+exports.getAllNotes = async (req, res) => {
+    try {
+        const notes = await Note.find();
+        res.json(notes);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch notes",
+            error: error.message
+        });
+    }
 };
-
 
 // GET NOTE BY ID
-exports.getNoteById = (req, res) => {
+exports.getNoteById = async (req, res) => {
+    try {
+        const note = await Note.findOne({
+            id: Number(req.params.id)
+        });
 
-    const note = notes.find(
-        n => n.id === Number(req.params.id)
-    );
+        if (!note) {
+            return res.status(404).json({
+                message: "Note not found"
+            });
+        }
 
-    if (!note) {
-        return res.status(404).json({
-            message: "Note not found"
+        res.json(note);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch note",
+            error: error.message
         });
     }
-
-    res.json(note);
 };
-
 
 // CREATE NOTE
-exports.createNote = (req, res) => {
+exports.createNote = async (req, res) => {
+    try {
+        const task = await Task.findOne({
+            id: Number(req.body.taskId)
+        });
 
-    const task = tasks.find(
-        task => task.id === Number(req.body.taskId)
-    );
+        if (!task) {
+            return res.status(404).json({
+                message: "Task not found"
+            });
+        }
 
-    if (!task) {
-        return res.status(404).json({
-            message: "Task not found"
+        const newNote = await Note.create({
+            id: Date.now(),
+            taskId: Number(req.body.taskId),
+            content: req.body.content
+        });
+
+        res.status(201).json(newNote);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to create note",
+            error: error.message
         });
     }
-
-    const newNote = {
-        id: notes.length + 1,
-        taskId: req.body.taskId,
-        content: req.body.content
-    };
-
-    notes.push(newNote);
-
-    res.status(201).json(newNote);
 };
-
 
 // UPDATE NOTE
-exports.updateNote = (req, res) => {
+exports.updateNote = async (req, res) => {
+    try {
+        const note = await Note.findOneAndUpdate(
+            { id: Number(req.params.id) },
+            { content: req.body.content },
+            { new: true }
+        );
 
-    const note = notes.find(
-        n => n.id === Number(req.params.id)
-    );
+        if (!note) {
+            return res.status(404).json({
+                message: "Note not found"
+            });
+        }
 
-    if (!note) {
-        return res.status(404).json({
-            message: "Note not found"
+        res.json(note);
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to update note",
+            error: error.message
         });
     }
-
-    note.content = req.body.content;
-
-    res.json(note);
 };
 
-
 // DELETE NOTE
-exports.deleteNote = (req, res) => {
+exports.deleteNote = async (req, res) => {
+    try {
+        const note = await Note.findOneAndDelete({
+            id: Number(req.params.id)
+        });
 
-    const index = notes.findIndex(
-        n => n.id === Number(req.params.id)
-    );
+        if (!note) {
+            return res.status(404).json({
+                message: "Note not found"
+            });
+        }
 
-
-    if (index === -1) {
-        return res.status(404).json({
-            message: "Note not found"
+        res.json({
+            message: "Note deleted successfully"
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to delete note",
+            error: error.message
         });
     }
-
-
-    notes.splice(index,1);
-
-    res.json({
-        message:"Note deleted successfully"
-    });
-
 };

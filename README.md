@@ -3,20 +3,21 @@ cd /workspaces/intern-progress-tracker
 cat > README.md <<'EOF'
 # Intern Progress Tracker
 
-A microservices-based web application for managing interns, tracking tasks, recording evaluations, monitoring progress, and generating progress digest reports.
+A microservices-based web application for managing interns, tracking tasks, recording evaluations and notes, monitoring progress, and generating progress digest reports.
 
 ## Features
 
 - Intern management
 - Task management
-- Notes and evaluations
+- Notes management
+- Evaluation management
 - Individual intern progress summary
 - Notification service
-- Progress digest and summary reports
+- Progress digest reports
 - MongoDB database integration
 - Mongoose ODM
 - Persistent data storage
-- Modern React frontend
+- React + Vite frontend
 - REST APIs using Node.js and Express
 - Docker containerization
 - Docker Compose support
@@ -24,8 +25,6 @@ A microservices-based web application for managing interns, tracking tasks, reco
 - CI/CD with GitHub Actions
 
 ## Project Architecture
-
-The application consists of three main components:
 
 ```text
                     ┌──────────────────────┐
@@ -48,7 +47,6 @@ The application consists of three main components:
                     │       MongoDB        │
                     │   Persistent Storage │
                     └──────────────────────┘
-
                                ▲
                                │
                          HTTP Requests

@@ -4,6 +4,8 @@ services:
     container_name: tracker-api
     ports:
       - "3001:3000"
+    env_file:
+      - ./tracker-api/.env
 
   digest-service:
     build: ./digest-service
