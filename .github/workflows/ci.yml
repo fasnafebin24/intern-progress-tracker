@@ -1,4 +1,4 @@
-```yaml
+
 name: Node.js CI
 
 on:
@@ -44,4 +44,4 @@ jobs:
       - name: Run Tests
         if: matrix.service == 'tracker-api'
         run: npm test
-```
+
