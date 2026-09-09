@@ -11,14 +11,6 @@ const evaluationRoutes = require("./routes/evaluationRoutes");
 const summaryRoutes = require("./routes/summaryRoutes");
 
 const app = express();
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log("MongoDB connected successfully");
-    })
-    .catch((error) => {
-        console.error("MongoDB connection failed:", error.message);
-    });
 
 app.use(cors());
 app.use(express.json());
@@ -32,10 +24,24 @@ app.use("/", summaryRoutes);
 app.get("/", (req, res) => {
     res.send("Tracker API is Running");
 });
+
 const PORT = process.env.PORT || 3000;
 
+async function startServer() {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("MongoDB connected successfully");
 
+        app.listen(PORT, () => {
+            console.log(`Tracker API running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("MongoDB connection failed:", error.message);
+    }
+}
 
-app.listen(PORT, function () {
-    console.log("Tracker API running on port 3000");
-});
+if (require.main === module) {
+    startServer();
+}
+
+module.exports = app;
