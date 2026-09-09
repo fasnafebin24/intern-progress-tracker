@@ -211,26 +211,31 @@ The Digest Service handles:
 
 ## Testing
 
-The REST APIs can be tested using:
+The Tracker API includes automated API tests using Jest and Supertest.
 
-* `curl`
-* Postman
+### Automated Tests
 
-Example:
+The test suite covers all four API resources:
+
+* Interns
+* Tasks
+* Evaluations
+* Notes
+
+The tests cover:
+
+* GET all endpoints
+* GET by ID endpoints
+* POST endpoints
+* PUT endpoints
+* DELETE endpoints
+* Validation and error cases
+* Parent resource 404 cases for Tasks, Evaluations, and Notes
+
+Tests use `mongodb-memory-server` to provide an isolated in-memory MongoDB database. No real MongoDB database is required for running the automated tests.
+
+To run the tests:
 
 ```bash
-curl http://localhost:3000/interns
-```
-
-## CI/CD
-
-GitHub Actions is used to automate the project's CI/CD workflow.
-
-The workflow can be used to build, test, and validate the application changes.
-
-## Security Notes
-
-* MongoDB credentials are stored using environment variables or Kubernetes Secrets.
-* `.env` files containing real credentials should not be committed to GitHub.
-* Kubernetes Secrets containing real credentials should not be committed to the repository.
-* Real MongoDB credentials should never be added to source code or documentation.
+cd tracker-api
+npm test
