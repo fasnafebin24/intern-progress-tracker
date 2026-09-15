@@ -1,16 +1,25 @@
 const express = require("express");
+
 const router = express.Router();
 
-const evaluationController = require("../controllers/evaluationController");
+const authMiddleware = require("../middleware/authMiddleware");
 
-router.post("/", evaluationController.createEvaluation);
+const {
+    createEvaluation,
+    getAllEvaluations,
+    getEvaluationById,
+    updateEvaluation,
+    deleteEvaluation
+} = require("../controllers/evaluationController");
 
-router.get("/", evaluationController.getAllEvaluations);
+router.post("/", authMiddleware, createEvaluation);
 
-router.get("/:id", evaluationController.getEvaluationById);
+router.get("/", getAllEvaluations);
 
-router.put("/:id", evaluationController.updateEvaluation);
+router.get("/:id", getEvaluationById);
 
-router.delete("/:id", evaluationController.deleteEvaluation);
+router.put("/:id", authMiddleware, updateEvaluation);
+
+router.delete("/:id", authMiddleware, deleteEvaluation);
 
 module.exports = router;

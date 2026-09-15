@@ -174,66 +174,103 @@ kubectl get svc
 
 ## Environment Variables
 
-The Tracker API requires the following environment variable:
+The Tracker API requires the following environment variables:
 
 ```env
 MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
 ```
 
-For Docker Compose, the variable is provided through the `tracker-api/.env` file and loaded using `env_file`.
+`MONGODB_URI` is used to connect the Tracker API to MongoDB.
 
-For Kubernetes, the variable is provided through a Kubernetes Secret using `secretKeyRef`.
+`JWT_SECRET` is used to sign and verify JSON Web Tokens (JWT).
 
-The actual MongoDB connection string should never be committed to source code or documentation.
+For Docker Compose, these variables are provided through the `tracker-api/.env` file and loaded using `env_file`.
 
-## API Services
+For Kubernetes, `MONGODB_URI` is provided through a Kubernetes Secret using `secretKeyRef`. The JWT secret should also be stored securely and should not be hardcoded.
 
-### Tracker API
+The actual MongoDB connection string, JWT secret, and other sensitive credentials should never be committed to source code or documentation.
 
-**Port:** `3000`
+## Authentication
 
-The Tracker API manages:
+The Tracker API uses **JWT-based authentication** to protect write operations.
 
-* Interns
-* Tasks
-* Notes
-* Evaluations
-* Individual intern progress summaries
+### User Registration
 
-### Digest Service
+New users can register using:
 
-**Port:** `4000`
+```http
+POST /auth/register
+```
 
-The Digest Service handles:
+Request body:
 
-* Notifications
-* Progress digest reports
+```json
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
 
-## Testing
+Passwords are hashed using **bcrypt** before they are stored in MongoDB. Plaintext passwords are never stored.
 
-The Tracker API includes automated API tests using Jest and Supertest.
+### User Login
 
-### Automated Tests
+Users can log in using:
 
-The test suite covers all four API resources:
+```http
+POST /auth/login
+```
 
-* Interns
-* Tasks
-* Evaluations
-* Notes
+Request body:
 
-The tests cover:
+```json
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
 
-* GET all endpoints
-* GET by ID endpoints
-* POST endpoints
-* PUT endpoints
-* DELETE endpoints
-* Validation and error cases
-* Parent resource 404 cases for Tasks, Evaluations, and Notes
+A successful login returns a JWT token.
 
-Tests use `mongodb-memory-server` to provide an isolated in-memory MongoDB database. No real MongoDB database is required for running the automated tests.
+The token expires after **1 hour**.
 
+### Using the JWT Token
+
+Protected requests must include the token in the `Authorization` header:
+
+```http
+Authorization: Bearer <your_jwt_token>
+```
+
+### Protected Routes
+
+All write operations are protected by JWT authentication.
+
+| Resource    | Public | Protected         |
+| ----------- | ------ | ----------------- |
+| Interns     | GET    | POST, PUT, DELETE |
+| Tasks       | GET    | POST, PUT, DELETE |
+| Evaluations | GET    | POST, PUT, DELETE |
+| Notes       | GET    | POST, PUT, DELETE |
+
+GET endpoints remain public so that application data can be viewed without authentication.
+
+POST, PUT, and DELETE endpoints require a valid JWT because these operations modify application data.
+
+Requests without a token, with an invalid token, or with an expired token return:
+
+```http
+401 Unauthorized
+```
+
+### Authentication Middleware
+
+The `authMiddleware` verifies the JWT token using the `JWT_SECRET` environment variable.
+
+If the token is valid, the request is allowed to continue to the protected endpoint.
+
+If the token is missing, invalid, or expired, the request is rejected with a `401 Unauthorized` response.
 To run the tests:
 
 ```bash

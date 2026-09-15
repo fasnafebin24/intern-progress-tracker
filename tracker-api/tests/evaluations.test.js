@@ -1,3 +1,4 @@
+
 const request = require("supertest");
 const mongoose = require("mongoose");
 
@@ -5,6 +6,7 @@ const app = require("../server");
 const Evaluation = require("../models/evaluationModel");
 const Task = require("../models/taskModel");
 const Intern = require("../models/internModel");
+const { getAuthToken } = require("./authHelper");
 
 describe("Evaluation API", () => {
     afterEach(async () => {
@@ -79,6 +81,7 @@ describe("Evaluation API", () => {
 
         const response = await request(app)
             .post("/evaluations")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 5003,
                 score: 5,
@@ -95,6 +98,7 @@ describe("Evaluation API", () => {
     test("POST /evaluations - should return 404 when task does not exist", async () => {
         const response = await request(app)
             .post("/evaluations")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 999999999,
                 score: 4,
@@ -115,6 +119,7 @@ describe("Evaluation API", () => {
 
         const response = await request(app)
             .post("/evaluations")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 5004,
                 score: 0,
@@ -135,6 +140,7 @@ describe("Evaluation API", () => {
 
         const response = await request(app)
             .post("/evaluations")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 5005,
                 score: 6,
@@ -162,6 +168,7 @@ describe("Evaluation API", () => {
 
         const response = await request(app)
             .put("/evaluations/4003")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 score: 5,
                 notes: "Excellent work"
@@ -177,6 +184,7 @@ describe("Evaluation API", () => {
     test("PUT /evaluations/:id - should return 404 for nonexistent evaluation", async () => {
         const response = await request(app)
             .put("/evaluations/999999999")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 score: 5,
                 notes: "Updated"
@@ -196,6 +204,7 @@ describe("Evaluation API", () => {
 
         const response = await request(app)
             .put("/evaluations/4004")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 999999999,
                 score: 5
@@ -215,6 +224,7 @@ describe("Evaluation API", () => {
 
         const response = await request(app)
             .put("/evaluations/4005")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 score: 6
             });
@@ -232,7 +242,8 @@ describe("Evaluation API", () => {
         });
 
         const response = await request(app)
-            .delete("/evaluations/4006");
+            .delete("/evaluations/4006")
+            .set("Authorization", `Bearer ${getAuthToken()}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBe(
@@ -248,9 +259,11 @@ describe("Evaluation API", () => {
 
     test("DELETE /evaluations/:id - should return 404 for nonexistent evaluation", async () => {
         const response = await request(app)
-            .delete("/evaluations/999999999");
+            .delete("/evaluations/999999999")
+            .set("Authorization", `Bearer ${getAuthToken()}`);
 
         expect(response.statusCode).toBe(404);
         expect(response.body.message).toBe("Evaluation not found");
     });
 });
+

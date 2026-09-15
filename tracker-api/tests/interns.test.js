@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const app = require("../server");
 const Intern = require("../models/internModel");
+const { getAuthToken } = require("./authHelper");
 
 describe("Intern API", () => {
     afterEach(async () => {
@@ -65,6 +66,7 @@ describe("Intern API", () => {
 
         const response = await request(app)
             .post("/interns")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send(newIntern);
 
         expect(response.statusCode).toBe(201);
@@ -78,6 +80,7 @@ describe("Intern API", () => {
     test("POST /interns - should return an error when required fields are missing", async () => {
         const response = await request(app)
             .post("/interns")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 name: "Incomplete Intern"
             });
@@ -97,6 +100,7 @@ describe("Intern API", () => {
 
         const response = await request(app)
             .put("/interns/1003")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 name: "Updated Name",
                 email: "updated@example.com",
@@ -114,6 +118,7 @@ describe("Intern API", () => {
     test("PUT /interns/:id - should return 404 for nonexistent intern", async () => {
         const response = await request(app)
             .put("/interns/999999999")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 name: "Updated Name",
                 email: "updated@example.com",
@@ -135,7 +140,8 @@ describe("Intern API", () => {
         });
 
         const response = await request(app)
-            .delete("/interns/1004");
+            .delete("/interns/1004")
+            .set("Authorization", `Bearer ${getAuthToken()}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBe("Intern deleted successfully");
@@ -146,7 +152,8 @@ describe("Intern API", () => {
 
     test("DELETE /interns/:id - should return 404 for nonexistent intern", async () => {
         const response = await request(app)
-            .delete("/interns/999999999");
+            .delete("/interns/999999999")
+            .set("Authorization", `Bearer ${getAuthToken()}`);
 
         expect(response.statusCode).toBe(404);
         expect(response.body.message).toBe("Intern not found");

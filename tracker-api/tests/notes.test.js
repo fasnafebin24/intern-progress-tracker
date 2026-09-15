@@ -1,3 +1,4 @@
+
 const request = require("supertest");
 const mongoose = require("mongoose");
 
@@ -5,6 +6,7 @@ const app = require("../server");
 const Note = require("../models/noteModel");
 const Task = require("../models/taskModel");
 const Intern = require("../models/internModel");
+const { getAuthToken } = require("./authHelper");
 
 describe("Note API", () => {
     afterEach(async () => {
@@ -76,6 +78,7 @@ describe("Note API", () => {
 
         const response = await request(app)
             .post("/notes")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 8003,
                 content: "This is a new note"
@@ -90,6 +93,7 @@ describe("Note API", () => {
     test("POST /notes - should return 404 when task does not exist", async () => {
         const response = await request(app)
             .post("/notes")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 999999999,
                 content: "Invalid parent task"
@@ -109,6 +113,7 @@ describe("Note API", () => {
 
         const response = await request(app)
             .post("/notes")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 taskId: 8004
             });
@@ -126,6 +131,7 @@ describe("Note API", () => {
 
         const response = await request(app)
             .put("/notes/7003")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 content: "Updated note"
             });
@@ -139,6 +145,7 @@ describe("Note API", () => {
     test("PUT /notes/:id - should return 404 for nonexistent note", async () => {
         const response = await request(app)
             .put("/notes/999999999")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send({
                 content: "Updated note"
             });
@@ -155,7 +162,8 @@ describe("Note API", () => {
         });
 
         const response = await request(app)
-            .delete("/notes/7004");
+            .delete("/notes/7004")
+            .set("Authorization", `Bearer ${getAuthToken()}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBe(
@@ -171,9 +179,11 @@ describe("Note API", () => {
 
     test("DELETE /notes/:id - should return 404 for nonexistent note", async () => {
         const response = await request(app)
-            .delete("/notes/999999999");
+            .delete("/notes/999999999")
+            .set("Authorization", `Bearer ${getAuthToken()}`);
 
         expect(response.statusCode).toBe(404);
         expect(response.body.message).toBe("Note not found");
     });
 });
+

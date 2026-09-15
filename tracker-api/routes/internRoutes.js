@@ -1,5 +1,8 @@
 const express = require("express");
+
 const router = express.Router();
+
+const authMiddleware = require("../middleware/authMiddleware");
 
 const {
     createIntern,
@@ -9,15 +12,14 @@ const {
     deleteIntern
 } = require("../controllers/internController");
 
-router.post("/", createIntern);
+router.post("/", authMiddleware, createIntern);
 
 router.get("/", getAllInterns);
 
-
 router.get("/:id", getInternById);
 
-router.put("/:id", updateIntern);
+router.put("/:id", authMiddleware, updateIntern);
 
-router.delete("/:id", deleteIntern);
+router.delete("/:id", authMiddleware, deleteIntern);
 
 module.exports = router;

@@ -9,6 +9,7 @@ const taskRoutes = require("./routes/taskRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 const evaluationRoutes = require("./routes/evaluationRoutes");
 const summaryRoutes = require("./routes/summaryRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use("/tasks", taskRoutes);
 app.use("/notes", noteRoutes);
 app.use("/evaluations", evaluationRoutes);
 app.use("/", summaryRoutes);
-
+app.use("/auth", authRoutes);
 app.get("/", (req, res) => {
     res.send("Tracker API is Running");
 });
