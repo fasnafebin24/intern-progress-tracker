@@ -158,4 +158,17 @@ describe("Intern API", () => {
         expect(response.statusCode).toBe(404);
         expect(response.body.message).toBe("Intern not found");
     });
+    test("POST /interns - should return 401 without token", async () => {
+    const response = await request(app)
+        .post("/interns")
+        .send({
+            name: "Unauthorized Intern",
+            email: "unauthorized@example.com",
+            startDate: "2026-09-01",
+            track: "Backend"
+        });
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.message).toBe("Authentication required");
+});
 });
